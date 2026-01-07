@@ -1,0 +1,184 @@
+{% extends "main/base.html" %}
+
+{% block title %}About Me - Lutfi Hanif{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Mengatur palet warna utama biru */
+    :root {
+        --primary-blue: #1e3a8a;
+        --secondary-blue: #3b82f6;
+        --light-blue: #dbeafe;
+        --bg-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    }
+
+    /* Judul Seksi dengan aksen biru */
+    .section-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--primary-blue);
+        margin-bottom: 40px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 25%;
+        width: 50%;
+        height: 4px;
+        background: var(--bg-gradient);
+        border-radius: 10px;
+    }
+
+    /* Card Styling - Glassmorphism Biru Halus */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--light-blue);
+        border-radius: 24px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px -15px rgba(30, 58, 138, 0.1);
+    }
+
+    .glass-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 25px 50px -12px rgba(30, 58, 138, 0.2);
+        border-color: var(--secondary-blue);
+    }
+
+    /* Icon Accent Biru Gradasi */
+    .icon-shape {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: var(--bg-gradient);
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    /* Education Badge Biru */
+    .year-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        background: var(--light-blue);
+        color: var(--primary-blue);
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+    }
+
+    /* Info Item */
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+        color: #475569;
+    }
+
+    .info-item i {
+        color: var(--secondary-blue);
+    }
+
+    /* Custom Badge untuk Experience */
+    .badge-blue-soft {
+        background: #f0f7ff;
+        color: var(--primary-blue);
+        border: 1px solid var(--light-blue);
+    }
+
+    /* Progress Bar Biru */
+    .progress {
+        background-color: #e2e8f0;
+        border-radius: 10px;
+    }
+    
+    .progress-bar {
+        background: var(--bg-gradient) !important;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background: linear-gradient(to bottom, #f8fafc, #eff6ff);">
+    <div class="container">
+        
+        <div class="text-center mb-5">
+            <h2 class="section-title">Riwayat Pendidikan</h2>
+        </div>
+
+        <div class="row g-4 justify-content-center mb-5">
+            {% for edu in education %}
+            <div class="col-lg-4 col-md-6">
+                <div class="glass-card h-100 p-4">
+                    <span class="year-badge">{{ edu.year }}</span>
+                    <h4 class="fw-bold mb-2" style="color: #1e293b;">{{ edu.degree }}</h4>
+                    <div class="info-item">
+                        <i class="fas fa-university"></i>
+                        <span>{{ edu.institution }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-book-open"></i>
+                        <span>{{ edu.majority }}</span>
+                    </div>
+                    <div class="mt-3 pt-3 border-top" style="border-color: #e2e8f0 !important;">
+                        <span class="fw-bold" style="color: var(--primary-blue);">GPA: {{ edu.gpa }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5 mb-5">
+            <h2 class="section-title">Pengalaman Magang & Organisasi</h2>
+        </div>
+
+        <div class="row g-4">
+            {% for exp in experience %}
+            <div class="col-lg-6">
+                <div class="glass-card h-100 p-4 position-relative overflow-hidden">
+                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: var(--bg-gradient); opacity: 0.08; border-radius: 0 0 0 100%;"></div>
+
+                    <div class="row align-items-center position-relative">
+                        <div class="col-auto">
+                            <div class="icon-shape shadow-sm">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <h4 class="fw-bold mb-1" style="font-size: 1.2rem; color: #0f172a;">
+                                {{ exp.company }}
+                            </h4>
+                            <p class="fw-bold mb-0" style="font-size: 0.95rem; color: var(--secondary-blue); letter-spacing: 0.5px;">
+                                {{ exp.role }}
+                            </p>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="info-item mb-3">
+                                <span class="badge rounded-pill badge-blue-soft px-3 py-2">
+                                    <i class="far fa-calendar-alt me-2"></i> {{ exp.periode }}
+                                </span>
+                            </div>
+
+                            <p class="card-text text-muted" style="text-align: justify; font-size: 0.95rem; line-height: 1.7;">
+                                {{ exp.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
